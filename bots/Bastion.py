@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 from botinfo import *
 import wolframalpha
@@ -31,7 +31,7 @@ async def WolframQuery(msg, mobj):
              results = ''
              for s in imgs:
                  results = results + s + '\n'
-     return await client.send_message(mobj.channel, pre_text(results))
+    return await client.send_message(mobj.channel, pre_text(results))
 
 @register_command
 async def howto(msg, mobj):

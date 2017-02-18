@@ -12,12 +12,7 @@
 ;; Define bots here - file to execute, keys, colors for logging
 (define bots
   (vector
-    (list "python"     "bots/dota-bot.py")
-    (list "python"     "bots/dumb-bot.py")
-    (list "python"    "bots/graph-bot.py")
-    (list "python"   "bots/hacker-bot.py")
-    (list "python"  "bots/janitor-bot.py")
-    (list "node"    "bots/FishFactBot.js")
+    (list "python3"     "bots/Bastion.py")
     ))
 (define total-bots (vector-length bots)) ; store how many have been set up
 (define fstring "[\033[38;5;~am~a\033[0m @ ~a:~a:~a] ~a")
