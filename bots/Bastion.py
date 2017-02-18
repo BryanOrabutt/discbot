@@ -4,6 +4,8 @@ from botinfo import *
 import wolframalpha
 from PIL import Image
 import re, urlmarker
+from random import randint, choice
+import requests
 
 bot_name = "Bastion"
 client = discord.Client()
@@ -12,8 +14,16 @@ bot_data = create_filegen(bot_name)
 wrclient = wolframalpha.Client('L247V6-5JHVJQVEYE')
 
 help_msg = '''
-Commands available:\n!wrq <query> - Queries Wolfram Alpha with the provided input query
+Commands available:\n!wrq <query> - Queries Wolfram Alpha with the provided input query\n
+!cat - Shows an image of a random cuddly kitty :)
 '''
+
+@register_command
+async def cat(msg, mobj):
+    resp = requests.get('http://random.cat/meow')
+    img = re.sub(r'[\\]', '', resp.text)
+    catlink = re.findall(urlmarker.URL_REGEX, str(img))
+    return await client.send_message(mobj.channel, str(catlink[0]))
 
 @register_command
 async def wrq(msg, mobj):

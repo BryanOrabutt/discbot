@@ -32,10 +32,6 @@ char_map = {" ": "%20", "'": "%27", "`": "%60", "%": "%25", "&": "%26",
             "*": "%2A", "^": "%5E", "(": "%28", ")": "%29", "=": "%3D",
             "[": "%5B", "]": "%5D", "{": "%7B", "}": "%7D"}
 
-# I'm trying to stop malicious searches from my Pi ;_;
-bad_words = ["fuck", "cock", "child", "kiddy", "porn", "pron",
-             "masturbate", "shit", "piss", "anal", "cum", "wank"]
-
 def display_url_when_no_servers(client, logger):
     """
     Print a clickable URL when the bot sees no servers active
@@ -44,12 +40,6 @@ def display_url_when_no_servers(client, logger):
     if len(client.servers) == 0:
         logger("Link: {}".format(discord.utils.oauth_url(client.user.id)))
     return
-
-def contains_badwords(string):
-    """
-    Return whether a string contains bad words
-    """
-    return any([x in string for x in bad_words])
 
 def get_last_message(client, chan, uid=None):
     """
@@ -151,8 +141,6 @@ def setup_on_message(client, logger):
     If 'help' is fed to the function, print out a help message in pre-tags
     """
     async def on_message(msg):
-        if contains_badwords(msg.content.lower()):
-            return
         splits = msg.content.strip().split(" ")
         key = splits.pop(0).lower()
         rest = " ".join(splits) if len(splits) > 0 else ""
