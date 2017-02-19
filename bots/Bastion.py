@@ -26,8 +26,7 @@ For more details do !howto <command> (eg. !howto eball)
 
 help_wrq ='''
 Wolfram Alpha Query\n
-Allows you to ask Wolfram Alpha a question and gives you the answers that
-Wolfram Alpha comes up with.
+Allows you to ask Wolfram Alpha a question and gives you the answers thatvWolfram Alpha comes up with.
 
 Examples:
 !wrq plot x^2
@@ -36,7 +35,7 @@ Examples:
 '''
 
 help_rtd ='''
-Roll the dice
+Roll the dice\n
 Allows you to roll dice provided the number of sides and number of rolls.
 
 Examples:
@@ -46,7 +45,7 @@ Examples:
 '''
 
 help_robot = '''
-Robohash generator.
+Robohash generator\n
 Allows you to generate a unique robot provided you give it a name.
 
 Examples:
@@ -56,13 +55,21 @@ Examples:
 '''
 
 help_eball = '''
-Ask the magic 8-ball.
+Ask the magic 8-ball\n
 Ask your question to the magic 8-ball and get a cryptic non-answer in reply!
 
 Examples:
 !eball Should I get out of bed?
 !eball Will I ever be famous?
 !eball Do you hate me?
+'''
+
+help_cat = '''
+Random Cat\n
+Treat yourself to a picture of a random cuddly kitty!
+
+Example:
+!cat
 '''
 
 @register_command
