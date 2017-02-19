@@ -20,6 +20,8 @@ Commands available:
 !rtd - Roll dice
 !robot - Generate a unique robot
 !eball - Ask the 8-ball
+
+For more details do !howto <command> (eg. !howto eball)
 '''
 
 help_wrq ='''
