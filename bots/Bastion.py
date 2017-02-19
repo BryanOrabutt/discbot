@@ -98,7 +98,9 @@ async def robot(msg, mobj):
     if(msg == ''):
         msg = 'Bastion'
     roboname = 'https://robohash.org/' + str(msg)
-    return await client.send_message(mobj.channel, str(roboname))
+    roboname = roboname.replace(' ', '%20')
+    roboname = roboname.replace('\'', '%27')
+    return await client.send_message(mobj.channel, roboname)
 
 @register_command
 async def rtd(msg, mobj):
