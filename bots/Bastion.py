@@ -2,7 +2,6 @@
 #-*- coding: utf-8 -*-
 from botinfo import *
 import wolframalpha
-from PIL import Image
 import re, urlmarker
 from random import randint, choice
 import requests
@@ -20,6 +19,8 @@ Commands available:
 !rtd - Roll dice
 !robot - Generate a unique robot
 !eball - Ask the 8-ball
+!choose - Make Bastion choose
+!botinfo - Displays developer information
 
 For more details do !howto <command> (eg. !howto eball)
 '''
@@ -71,6 +72,40 @@ Treat yourself to a picture of a random cuddly kitty!
 Example:
 !cat
 '''
+
+info_string = '''
+Bastion is a bot created by Bryan Orabutt. This bot is a pet project intended only for use in friend's servers. The source code is available for free under MIT liscense located here: https://github.com/BryanOrabutt/discbot
+
+To contact me about any questions or comments with regards to Bastion please use one of the points of contact listed below:
+email: bryan.orabutt@gmail.com
+discord: borabut#7826
+'''
+
+help_info = '''
+Bot Developer information\n
+Displays information about the bot and it's developer for those that are curious.
+
+Example:
+!botinfo
+'''
+
+help_choose = '''
+Choose\n
+For when you're in a quandry that only Bastion can solve. Give Bastion a list of choices and he will tell you which one is the best choice for you!
+
+Examples:
+!choose watch Netflix, play Overwatch, contemplate my existence
+'''
+
+@register_command
+async def choose(msg, mobj):
+    choices = msg.split(',')
+    c = randint(0, len(choices))
+    return await client.send_message(mobj.channel, str(choices[c]))
+
+@register_command
+async def botinfo(msg, mobj):
+    return await client.send_message(mobj.channel, pre_text(info_string))
 
 @register_command
 async def eball(msg, mobj):
@@ -171,6 +206,10 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_eball))
     elif(msg == 'robot'):
         return await client.send_message(mobj.channel, pre_text(help_robot))
+    elif(msg == 'choose'):
+        return await client.send_message(mobj.channel, pre_text(help_choose))    
+    elif(msg == 'botinfo'):
+        return await client.send_message(mobj.channel, pre_text(help_info))    
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 
