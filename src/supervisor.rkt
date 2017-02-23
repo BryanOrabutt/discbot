@@ -59,7 +59,7 @@
         (unless (= x 12)
           (logger "Checking on bots")
           (for-each revive (range total-bots))
-          (sleep 300)
+          (sleep 120)
           (loop (add1 x))))
       (loop 0))
     (logger "Shutting down Custodian")
