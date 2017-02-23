@@ -25,6 +25,7 @@ Commands available:
 !choose - Make Bastion choose
 !catfacts - Bastion tells you a cat fact
 !doge - Get a doge
+!dog - Shows an image of a random puppy :D
 !botinfo - Displays developer information
 
 For more details do !howto <command> (eg. !howto eball)
@@ -118,6 +119,18 @@ Examples:
 !doge wow, such doge, very excite, wow
 !doge msg1, msg2, msg3, etc
 '''
+
+help_dog = '''
+Dog\n
+Shows a randome cuddly puppy :D
+
+Example:
+!dog
+'''
+
+@register_command
+async def dog(msg, mobj):
+    return await client.send_message(mobj.channel, 'http://www.randomdoggiegenerator.com/randomdoggie.php')
 
 @register_command
 async def doge(msg, mobj):
@@ -250,6 +263,8 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_catfacts))
     elif(msg == 'doge'):
         return await client.send_message(mobj.channel, pre_text(help_doge))    
+    elif(msg == 'dog'):
+        return await client.send_message(mobj.channel, pre_text(help_dog))    
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 
