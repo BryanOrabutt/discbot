@@ -127,10 +127,31 @@ Shows a randome cuddly puppy :D
 Example:
 !dog
 '''
+help_dogfacts = '''
+Dogfacts\n
+Bastion know's all there is to know about dogs and is happy to share!
+
+Example:
+!dogfacts
+'''
+
+@register_command
+async def dogfacts(msg, mobj):
+    dfile = open("~/GitHub/discbot/bots/dogfacts.txt", "r")
+    print(dfile.name)
+    print(dfile.closed)
+    lines = dfile.read().splitlines()
+    print(lines)
+    fact = str(lines[randint(1, len(lines)-1)])
+    print(fact)
+    return await client.send_message(mobj.channel, str(fact))	
 
 @register_command
 async def dog(msg, mobj):
-    return await client.send_message(mobj.channel, 'http://www.randomdoggiegenerator.com/randomdoggie.php')
+    resp = requests.get('http://random.dog/')
+    img = re.findall(r"'(.*?[^\\])'", str(resp.text))
+    dog = 'http://random.dog/' + str(img[0])
+    return await client.send_message(mobj.channel, str(dog))
 
 @register_command
 async def doge(msg, mobj):
@@ -265,6 +286,8 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_doge))    
     elif(msg == 'dog'):
         return await client.send_message(mobj.channel, pre_text(help_dog))    
+    elif(msg == 'dogfacts'):
+        return await client.send_message(mobj.channel, pre_text(help_dogfacts))    
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 
