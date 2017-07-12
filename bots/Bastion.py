@@ -148,8 +148,8 @@ async def dogfacts(msg, mobj):
 
 @register_command
 async def dog(msg, mobj):
-    resp = requests.get('http://random.dog/')
-    img = re.findall(r"'(.*?[^\\])'", str(resp.text))
+    resp = requests.get('https://random.dog/woof')
+    img = re.findaLL(R'"(.*?[^\\])"', str(resp.text))
     dog = 'http://random.dog/' + str(img[0])
     return await client.send_message(mobj.channel, str(dog))
 

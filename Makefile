@@ -5,7 +5,7 @@ virtualenv:
 dev:
 	source dev/bin/activate
 setup:
-	pip install -r requirements.txt
+	pip3 install -r requirements.txt
 	npm install discordie
 clean:
 	rm -rf botdata/
