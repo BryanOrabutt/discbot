@@ -6,6 +6,7 @@ import re, urlmarker
 from random import randint, choice
 import requests
 from linereader import dopen
+from google import search
 
 bot_name = "Bastion"
 client = discord.Client()
@@ -134,6 +135,13 @@ Bastion know's all there is to know about dogs and is happy to share!
 Example:
 !dogfacts
 '''
+help_lmgtfy = '''
+Let me Google that for you\n
+Bastion will show you the top google entries for a given query.
+
+Example:
+!lmgtfy how do i use google?
+'''
 
 @register_command
 async def dogfacts(msg, mobj):
@@ -259,6 +267,16 @@ async def wrq(msg, mobj):
     return await client.send_message(mobj.channel, results)
 
 @register_command
+async def lmgtfy(msg, mobj):
+	"""
+	Queries google using the provided message and returns the top results.
+	"""
+	results = ''
+	for url in search(str(msg), tld="com", lang="es", stop=5, pause=2.0):
+		results = results + url + '\n'
+	return await client.send_message(mobj.channel, results)
+
+@register_command
 async def howto(msg, mobj):
     """
     Displays a general help message about available commands, or a specific help
@@ -287,7 +305,9 @@ async def howto(msg, mobj):
     elif(msg == 'dog'):
         return await client.send_message(mobj.channel, pre_text(help_dog))    
     elif(msg == 'dogfacts'):
-        return await client.send_message(mobj.channel, pre_text(help_dogfacts))    
+        return await client.send_message(mobj.channel, pre_text(help_dogfacts))
+    elif(msg == 'lmgtfy'):
+        return await client.send_message(mobj.channel, pre_text(help_lmgtfy)) 
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 
