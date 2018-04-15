@@ -265,10 +265,9 @@ async def cat(msg, mobj):
         items = msg.split(' ')
         if str(items[0]) == 'list':
             categories = catapi.getCategories()
-            for category in categories:
-                if str(category) != "kittens":
-                    returnmsg += str(category) + ' '
-            return await client.send_message(mobj.channel, pre_text(returnmsg))
+            categories.remove('kittens')
+            returnmsg = ''.join(categories)
+            return await client.send_message(mobj.channel, pre_text(categories.text))
         elif str(items[0]) == 'category':
             img,imgid = catapi.getCat(None,str(items[0]))
             returnmsg = img + '\nimage id=' + imgid
