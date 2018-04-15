@@ -259,7 +259,7 @@ async def cat(msg, mobj):
 
     if msg == "":
         img,imgid = catapi.getCat()
-        returnmsg = img + '\nimage id=' + imgid
+        returnmsg = img.join('\nimage id=').join(imgid)
         return await client.send_message(mobj.channel, returnmsg)
     else:
         items = msg.split(' ')
@@ -270,7 +270,7 @@ async def cat(msg, mobj):
             return await client.send_message(mobj.channel, pre_text(returnmsg))
         elif str(items[0]) == 'category':
             img,imgid = catapi.getCat(None,str(items[1]))
-            returnmsg = img + '\nimage id=' + imgid
+            returnmsg = img.join('\nimage id=').join(imgid)
             return await client.send_message(mobj.channel, returnmsg)
         elif str(items[0]) == 'favourites':
             favs = catapi.getFavs(mobj.author.id)
@@ -279,7 +279,7 @@ async def cat(msg, mobj):
         elif str(items[0]) == 'id':
             if len(items) == 2:
                 img,imgid = catapi.getCat(str(items[1]),None)
-                returnmsg = img + '\nimage id=' + imgid
+                returnmsg = img.join('\nimage id=').join(imgid)
                 return await client.send_message(mobj.channel, returnmsg)
             elif str(items[2]) == 'vote':
                 catapi.vote(str(mobj.autho.id), str(items[1]), str(items[3]))
@@ -293,6 +293,8 @@ async def cat(msg, mobj):
             elif str(items[2]) == 'report':
                 catapi.favourite(mobj.author.id, str(items[1]), str(items[3]))
                 return await client.send_message(mobj.channel, "You have reported a cat image. Thanks for helping us make our service better!")
+        else:
+            return await client.send_message(mobj.channel, "Invalid input")
 
 @register_command
 async def wrq(msg, mobj):
