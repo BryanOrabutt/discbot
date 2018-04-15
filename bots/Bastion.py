@@ -258,7 +258,7 @@ async def cat(msg, mobj):
     returnmsg = ''    
 
     if msg == "":
-        img,imgid = catapi.getCat()
+        img,imgid = catapi.getCat(None,None)
         returnmsg = img.join('\nimage id=').join(imgid)
         return await client.send_message(mobj.channel, returnmsg)
     else:
