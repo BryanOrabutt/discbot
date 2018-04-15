@@ -271,7 +271,7 @@ async def cat(msg, mobj):
         elif str(items[0]) == 'category':
             img,imgid = catapi.getCat(None,str(items[1]))
             returnmsg = img + '\nimage id=' + imgid
-            return await client.send_message(mobj.channel, returnmesg)
+            return await client.send_message(mobj.channel, returnmsg)
         elif str(items[0]) == 'favourites':
             favs = catapi.getFavs(mobj.author.id)
             returnmsg = '\n'.join(favs)
