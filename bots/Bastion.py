@@ -269,7 +269,7 @@ async def cat(msg, mobj):
             returnmsg = '\n'.join(categories)
             return await client.send_message(mobj.channel, pre_text(returnmsg))
         elif str(items[0]) == 'category':
-            img,imgid = catapi.getCat(None,str(items[0]))
+            img,imgid = catapi.getCat(None,str(items[1]))
             returnmsg = img + '\nimage id=' + imgid
             return await client.send_message(mobj.channel, returnmesg)
         elif str(items[0]) == 'favourites':
