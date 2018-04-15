@@ -7,6 +7,7 @@ from random import randint, choice
 import requests
 from linereader import dopen
 from google import search
+import catapi
 
 bot_name = "Bastion"
 client = discord.Client()
@@ -73,11 +74,19 @@ Examples:
 '''
 
 help_cat = '''
-Random Cat\n
-Treat yourself to a picture of a random cuddly kitty!
+Cat pictures\n
+Treat yourself to a picture of a cuddly kitty! Can let Bastion pick for you or provide the ID of a cat you want to see! Can also vote (1-10), favourite, and report pictures.
 
 Example:
 !cat
+!cat list categories
+!cat category <category item>
+!cat id <image id>
+!cat id <image id> vote <1-10>
+!cat favourites
+!cat id <image id> addfav
+!cat id <image id> remfav
+!cat id <image id> report <reason>
 '''
 
 info_string = '''
@@ -246,10 +255,48 @@ async def cat(msg, mobj):
     Retrieves a random cat image for the user.
     Example: !cat
     """
-    resp = requests.get('http://random.cat/meow')
-    img = re.sub(r'[\\]', '', resp.text)
-    catlink = re.findall(urlmarker.URL_REGEX, str(img))
-    return await client.send_message(mobj.channel, str(catlink[0]))
+    returnmsg = ''    
+
+    if msg == "":
+        img,imgid = catapi.getCat()
+        returnmsg = img + '\nimage id=' + imgid
+        return await client.send_message(mobj.channel, returnmsg)
+    else:
+        items = msg.split(' ')
+        if str(items[0]) == 'list':
+            categories = catapi.getCategories()
+            for category in categories:
+                if str(category) != "kittens":
+                    returnmsg += str(category)
+                    returnmsg += '\n'
+                return await client.send_message(mobj.channel, returnmsg)
+        elif str(items[0]) == 'category':
+            img,imgid = catapi.getCat(,str(items[0]))
+            returnmsg = img + '\nimage id=' + imgid
+            return await client.send_message(mobj.channel, returnmesg)
+        elif str(items[0]) == 'favourites':
+            favs = catapi.getFavs(mobj.author.id)
+            for fav in favs:
+                returnmsg += str(fav)
+                returnmsg += '\n'
+            return await client.send_message(mobj.author.id, returnmsg)
+        elif str(items[0]) == 'id':
+            if len(items) == 2:
+                img,imgid = catapi.getCat(str(items[1],))
+                returnmsg = img + '\nimage id=' + imgid
+                return await client.send_message(mobj.channel, returnmsg)
+            elif str(items[2]) == 'vote':
+                catapi.vote(str(mobj.autho.id), str(items[1]), str(items[3]))
+                return await client.send_message(mobj.channel, "Thanks for voting!")
+            elif str(items[2]) == 'addfav':
+                catapi.favourite(mobj.author.id, str(items[1]), 'add')
+                return await client.send_message(mobj.channel, "You have added a cat to your favourites.")
+            elif str(items[2]) == 'remfav':
+                catapi.favourite(mobj.author.id, str(items[1]), 'remove')
+                return await client.send_message(mobj.channel, "You have removed a cat from your favourites.")
+            elif str(items[2]) == 'report':
+                catapi.favourite(mobj.author.id, str(items[1]), str(items[3]))
+                return await client.send_message(mobj.channel, "You have reported a cat image. Thanks for helping us make our service better!")
 
 @register_command
 async def wrq(msg, mobj):
