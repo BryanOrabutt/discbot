@@ -271,7 +271,7 @@ async def cat(msg, mobj):
                     returnmsg += '\n'
                 return await client.send_message(mobj.channel, returnmsg)
         elif str(items[0]) == 'category':
-            img,imgid = catapi.getCat(,str(items[0]))
+            img,imgid = catapi.getCat(None,str(items[0]))
             returnmsg = img + '\nimage id=' + imgid
             return await client.send_message(mobj.channel, returnmesg)
         elif str(items[0]) == 'favourites':
@@ -282,7 +282,7 @@ async def cat(msg, mobj):
             return await client.send_message(mobj.author.id, returnmsg)
         elif str(items[0]) == 'id':
             if len(items) == 2:
-                img,imgid = catapi.getCat(str(items[1],))
+                img,imgid = catapi.getCat(str(items[1]),None)
                 returnmsg = img + '\nimage id=' + imgid
                 return await client.send_message(mobj.channel, returnmsg)
             elif str(items[2]) == 'vote':
