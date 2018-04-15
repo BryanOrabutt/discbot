@@ -260,7 +260,7 @@ async def cat(msg, mobj):
     if msg == "":
         img,imgid = catapi.getCat(None,None)
         returnmsg = img.join('\nimage id=').join(imgid)
-        return await client.send_message(mobj.channel, returnmsg)
+        return await client.send_message(mobj.channel, str(returnmsg))
     else:
         items = msg.split(' ')
         if str(items[0]) == 'list':
