@@ -28,7 +28,7 @@ def vote(userid,imgid,score):
     str0 = 'http://thecatapi.com/api/images/vote?api_key=' + str(key)
     str1 = '&sub_id=' + str(userid)
     str2 = '&image_id=' + str(imgid)
-    str3 = '&scre=' + str(score)
+    str3 = '&score=' + str(score)
     url = str0 + str1 + str2 + str3
     resp = requests.get(url)
     
