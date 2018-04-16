@@ -6,7 +6,6 @@ import re, urlmarker
 from random import randint, choice
 import requests
 from linereader import dopen
-from google import search
 import catapi
 
 bot_name = "Bastion"
@@ -144,13 +143,6 @@ Bastion know's all there is to know about dogs and is happy to share!
 Example:
 !dogfacts
 '''
-help_lmgtfy = '''
-Let me Google that for you\n
-Bastion will show you the top google entries for a given query.
-
-Example:
-!lmgtfy how do i use google?
-'''
 
 @register_command
 async def dogfacts(msg, mobj):
@@ -258,14 +250,15 @@ async def cat(msg, mobj):
 
     if msg == '':
         img,imgid = catapi.getCat(None,None)
-        #returnmsg = img + '\nimage id = ' + imgid
-        return await client.send_message(mobj.channel, "Test")
+        returnmsg = img + '\nimage id = ' + imgid
+        return await client.send_message(mobj.channel, returnmsg)
     else:
         items = msg.split(' ')
         if str(items[0]) == 'list':
             categories = catapi.getCategories()
             categories.remove('kittens')
             returnmsg = '\n'.join(categories)
+            returnmsg += '\nhats'
             return await client.send_message(mobj.channel, pre_text(returnmsg))
         elif str(items[0]) == 'category':
             img,imgid = catapi.getCat(None,str(items[1]))
@@ -274,14 +267,14 @@ async def cat(msg, mobj):
         elif str(items[0]) == 'favourites':
             favs = catapi.getFavs(mobj.author.id)
             returnmsg = '\n'.join(favs)
-            return await client.send_message(mobj.author.id, returnmsg)
+            return await client.send_message(mobj.author, returnmsg)
         elif str(items[0]) == 'id':
             if len(items) == 2:
                 img,imgid = catapi.getCat(str(items[1]),None)
                 returnmsg = img + '\nimage id=' + imgid
                 return await client.send_message(mobj.channel, returnmsg)
             elif str(items[2]) == 'vote':
-                catapi.vote(str(mobj.autho.id), str(items[1]), str(items[3]))
+                catapi.vote(str(mobj.author.id), str(items[1]), str(items[3]))
                 return await client.send_message(mobj.channel, "Thanks for voting!")
             elif str(items[2]) == 'addfav':
                 catapi.favourite(mobj.author.id, str(items[1]), 'add')
@@ -309,16 +302,6 @@ async def wrq(msg, mobj):
              for s in imgs:
                  results = results + s + ' '
     return await client.send_message(mobj.channel, results)
-
-@register_command
-async def lmgtfy(msg, mobj):
-	"""
-	Queries google using the provided message and returns the top results.
-	"""
-	results = ''
-	for url in search(str(msg), tld="com", lang="es", stop=5, pause=2.0):
-		results = results + url + '\n'
-	return await client.send_message(mobj.channel, results)
 
 @register_command
 async def howto(msg, mobj):
@@ -350,8 +333,6 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_dog))    
     elif(msg == 'dogfacts'):
         return await client.send_message(mobj.channel, pre_text(help_dogfacts))
-    elif(msg == 'lmgtfy'):
-        return await client.send_message(mobj.channel, pre_text(help_lmgtfy)) 
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 

@@ -12,7 +12,7 @@
 ;; Define bots here - file to execute, keys, colors for logging
 (define bots
   (vector
-    (list "python3"     "bots/Bastion.py")
+    (list "python3.6"     "bots/Bastion.py")
     ))
 (define total-bots (vector-length bots)) ; store how many have been set up
 (define fstring "[\033[38;5;~am~a\033[0m @ ~a:~a:~a] ~a")
