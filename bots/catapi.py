@@ -16,7 +16,8 @@ def getCat(imgid=None,category=None):
     data = re.findall(urlmarker.URL_REGEX, str(resp.text))
     img = data[1]
     imgid = re.search(r'(?<=(\?)id=)([\w-]+)', str(data[0]))
-    return str(img), str(imgid[0])
+    retval = [str(img), str(imgid[0])]
+    return retval
    
 def getCategories():
     resp = requests.get('http://thecatapi.com/api/categories/list')
@@ -58,4 +59,4 @@ def report(userid, imgid, reason=None):
         str3.replace(' ', '%20')
     url = str0 + str1 + str2 + str3
     resp = requests.get(url)
-    
+
