@@ -255,7 +255,6 @@ async def cat(msg, mobj):
     Retrieves a random cat image for the user.
     Example: !cat
     """
-    returnmsg = ''    
 
     if msg == "":
         img,imgid = catapi.getCat(None,None)
@@ -270,7 +269,7 @@ async def cat(msg, mobj):
             return await client.send_message(mobj.channel, pre_text(returnmsg))
         elif str(items[0]) == 'category':
             img,imgid = catapi.getCat(None,str(items[1]))
-            returnmsg = img.join('\nimage id=').join(imgid)
+            returnmsg = img + '\nimage id=' + join(imgid)
             return await client.send_message(mobj.channel, returnmsg)
         elif str(items[0]) == 'favourites':
             favs = catapi.getFavs(mobj.author.id)
@@ -279,7 +278,7 @@ async def cat(msg, mobj):
         elif str(items[0]) == 'id':
             if len(items) == 2:
                 img,imgid = catapi.getCat(str(items[1]),None)
-                returnmsg = img.join('\nimage id=').join(imgid)
+                returnmsg = img + '\nimage id=' + imgid
                 return await client.send_message(mobj.channel, returnmsg)
             elif str(items[2]) == 'vote':
                 catapi.vote(str(mobj.autho.id), str(items[1]), str(items[3]))
