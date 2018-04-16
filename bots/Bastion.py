@@ -256,7 +256,7 @@ async def cat(msg, mobj):
     Example: !cat
     """
 
-    if msg == "":
+    if msg == '':
         img,imgid = catapi.getCat(None,None)
         returnmsg = img + '\nimage id = ' + imgid
         return await client.send_message(mobj.channel, msg)
