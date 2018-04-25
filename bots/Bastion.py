@@ -319,7 +319,7 @@ async def pirate(msg, mobj):
     req = req.replace(' ', '%20')
     req = req.replace('\'', '%27')
     resp = requests.get(str(req)).json()
-    return await client.send_message(mobj.channel, resp['contents']['translate'])
+    return await client.send_message(mobj.channel, resp['contents']['translated'])
     
 
 @register_command
