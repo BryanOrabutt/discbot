@@ -7,6 +7,7 @@ from random import randint, choice
 import requests
 from linereader import dopen
 import catapi
+import json
 
 bot_name = "Bastion"
 client = discord.Client()
@@ -142,6 +143,14 @@ Bastion know's all there is to know about dogs and is happy to share!
 
 Example:
 !dogfacts
+'''
+
+help_pirate = '''
+Pirate translator\n
+Bastion is well versed in pirate speech and can help you communicate with the saltiest of sea dogs.
+
+Example:
+!pirate Hello sir! My mother goes with me to the ocean.
 '''
 
 @register_command
@@ -304,6 +313,15 @@ async def wrq(msg, mobj):
     return await client.send_message(mobj.channel, results)
 
 @register_command
+aysnc def pirate(msg, mobj):
+    req = 'api.funtranslations.com/translate/pirate.json?text=' + str(msg)
+    req = req.replace(' ', '%20')
+    req = req.replace('\'', '%27')
+    resp = requests.get(str(req)).json()
+    return await client.send_message(mobj.channel, str(resp['contents']['translate']))
+    
+
+@register_command
 async def howto(msg, mobj):
     """
     Displays a general help message about available commands, or a specific help
@@ -333,6 +351,8 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_dog))    
     elif(msg == 'dogfacts'):
         return await client.send_message(mobj.channel, pre_text(help_dogfacts))
+    elif(msg == 'pirate'):
+        return await client.send_message(mobj.channel, pre_text(help_pirate))
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 
