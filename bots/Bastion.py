@@ -313,7 +313,7 @@ async def wrq(msg, mobj):
     return await client.send_message(mobj.channel, results)
 
 @register_command
-aysnc def pirate(msg, mobj):
+async def pirate(msg, mobj):
     req = 'api.funtranslations.com/translate/pirate.json?text=' + str(msg)
     req = req.replace(' ', '%20')
     req = req.replace('\'', '%27')
