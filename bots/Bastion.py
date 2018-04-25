@@ -29,6 +29,7 @@ Commands available:
 !doge - Get a doge
 !dog - Shows an image of a random puppy :D
 !botinfo - Displays developer information
+!pirate - Translates a message from english to pirate
 
 For more details do !howto <command> (eg. !howto eball)
 '''
@@ -318,7 +319,7 @@ async def pirate(msg, mobj):
     req = req.replace(' ', '%20')
     req = req.replace('\'', '%27')
     resp = requests.get(str(req)).json()
-    return await client.send_message(mobj.channel, str(resp['contents']['translate']))
+    return await client.send_message(mobj.channel, resp['contents']['translate'])
     
 
 @register_command
