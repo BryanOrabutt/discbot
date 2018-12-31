@@ -29,7 +29,6 @@ Commands available:
 !doge - Get a doge
 !dog - Shows an image of a random puppy :D
 !botinfo - Displays developer information
-!pirate - Translates a message from english to pirate
 
 For more details do !howto <command> (eg. !howto eball)
 '''
@@ -144,14 +143,6 @@ Bastion know's all there is to know about dogs and is happy to share!
 
 Example:
 !dogfacts
-'''
-
-help_pirate = '''
-Pirate translator\n
-Bastion is well versed in pirate speech and can help you communicate with the saltiest of sea dogs.
-
-Example:
-!pirate Hello sir! My mother goes with me to the ocean.
 '''
 
 @register_command
@@ -311,16 +302,7 @@ async def wrq(msg, mobj):
              imgs = re.findall(urlmarker.URL_REGEX, str(sub))
              for s in imgs:
                  results = results + s + ' '
-    return await client.send_message(mobj.channel, results)
-
-@register_command
-async def pirate(msg, mobj):
-    req = 'https://api.funtranslations.com/translate/pirate.json?api_key=_57K_jWM7EWyDOmSpMkuhgeF&text=' + str(msg)
-    req = req.replace(' ', '%20')
-    req = req.replace('\'', '%27')
-    resp = requests.get(str(req)).json()
-    return await client.send_message(mobj.channel, resp['contents']['translated'])
-    
+    return await client.send_message(mobj.channel, results)    
 
 @register_command
 async def howto(msg, mobj):
@@ -352,8 +334,6 @@ async def howto(msg, mobj):
         return await client.send_message(mobj.channel, pre_text(help_dog))    
     elif(msg == 'dogfacts'):
         return await client.send_message(mobj.channel, pre_text(help_dogfacts))
-    elif(msg == 'pirate'):
-        return await client.send_message(mobj.channel, pre_text(help_pirate))
     else:
         return await client.send_message(mobj.channel, pre_text(help_msg))
 

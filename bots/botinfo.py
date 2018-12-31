@@ -90,6 +90,7 @@ def setup_on_ready(client, bot_name, logger):
             client.close()
             return logger("Failed to set up {}'s folder".format(bot_name))
         display_url_when_no_servers(client, logger)
+        await client.change_presence(game=discord.Game(name='Use !howto for list of commands'))
         return logger("Connection status: {}".format(client.is_logged_in))
     return on_ready
 
