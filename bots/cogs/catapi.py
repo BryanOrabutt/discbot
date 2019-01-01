@@ -1,7 +1,9 @@
-#!/usr/bin/env python3.6
-import requests, re, urlmarker
+#!/usr/bin/env python
+import requests, re
+from . import urlmarker
+from utils import *
 
-key = "Mjk4ODU5"
+key = read_key('cat')
 
 def getCat(imgid=None,category=None):
     str0 = 'http://thecatapi.com/api/images/get?format=html&api_key=' + str(key)
