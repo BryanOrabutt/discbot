@@ -144,6 +144,10 @@ class Commands():
 
     @commands.command(name='dog',aliases=['puppers','doggos'])
     async def dog(self, ctx):
+        """
+        Retrieves a random dog for your viewing pleasure!
+        example: !dog
+        """
         resp = requests.get('https://random.dog/woof')
         dog = 'http://random.dog/' + str(resp.text)
         return await ctx.send(str(dog))
@@ -151,6 +155,11 @@ class Commands():
 
     @commands.command(name='doge')
     async def doge(self, ctx, *, msg: str):
+        """
+        Doge speaks the truth. Wow.
+        example: !doge doge is very cool, such awesome, wow
+        """
+
         doge = 'http://dogr.io'
         tokens = msg.replace(' ', '').split(',')
         for word in tokens:
@@ -161,12 +170,22 @@ class Commands():
 
     @commands.command(name='catfacts',aliases=['cf', 'catf'])
     async def catfacts(self, ctx):
+        """
+        Learn more about cats from Bastion.
+        example: !catfacts
+        """
+
         num = randint(0, len(cat_facts)-1);
         return await ctx.send(str(cat_facts[num]))
 
 
     @commands.command(name='choose',aliases=['choices','pick'])
     async def choose(self, ctx, *, msg: str):
+        """
+        Bastion will choose for you.
+        example: !choose a, b, c
+        """
+
         choices = msg.split(',')
         c = randint(0, len(choices)-1)
         return await ctx.send(str(choices[c]))
@@ -179,6 +198,11 @@ class Commands():
 
     @commands.command(name='eball',aliases=['eightball','eb','ball'])
     async def eball(self, ctx, *, msg: str):
+        """
+        Bastion doubles as a magic 8-ball
+        example: !eball Am I cool?
+        """
+
         answers = [
             'It is certain',
             'It is decidedly so',
@@ -209,6 +233,7 @@ class Commands():
     async def robot(self, ctx, *, msg: str):
         """
         Generates a unique robot from hashing your input string.
+        example: !robot Bastion
         """
         if(msg == ''):
             msg = 'Bastion'
@@ -224,6 +249,7 @@ class Commands():
         Roll a d<N> dice <X> number of times
         Example: !rtd 2d10 - rolls two d10 dice
         """
+
         if msg == "":
             return await ctx.send("You didn't say anything!")
         try:
