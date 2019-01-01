@@ -36,7 +36,7 @@ async def on_ready():
     print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
 
     # Changes our bots Playing Status. type=1(streaming) for a standard game you could remove type and url.
-    activity = discord.Game(name='Use !howto for list of commands', type=1, url='https://www.github.com/BryanOrabutt/discbot/')
+    activity = discord.Game(name='Use !help for list of commands', type=1, url='https://www.github.com/BryanOrabutt/discbot/')
     await bot.change_presence(status=discord.Status.online,activity=activity)
     print(f'Successfully logged in and booted...!')
 
