@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from utils import *
 import sys, traceback
+from discord.voice_client import VoiceClient
 
 def get_prefix(bot, message):
     """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
@@ -15,7 +16,7 @@ def get_prefix(bot, message):
 
 # Below cogs represents our folder our cogs are in. Following is the file name. So 'meme.py' in cogs, would be cogs.meme
 # Think of it like a dot path import
-initial_extensions = ['cogs.core', 'cogs.music']
+initial_extensions = ['cogs.core', 'cogs.music']#music2 is another implmenation. use music if it does not work
 
 bot = commands.Bot(command_prefix=get_prefix, description='Beep boop, I am a robot!')
 

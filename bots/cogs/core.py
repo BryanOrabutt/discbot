@@ -229,19 +229,70 @@ class Commands():
         return await ctx.send(answers[index])
 
 
-    @commands.command(name='robot',aliases=['robots','robo'])
+    @commands.command(name='robot',aliases=['robots','robo','kitty'])
     async def robot(self, ctx, *, msg: str):
         """
         Generates a unique robot from hashing your input string.
         example: !robot Bastion
         """
-        if(msg == ''):
+        if(msg == None):
             msg = 'Bastion'
+
+        inp = ctx.message.content.split(' ')
+        token = str(inp[0])
+
         roboname = 'https://robohash.org/' + str(msg)
+
+
+        if(token == '!kitty'):
+            roboname = roboname + '?set=set4'
+
         roboname = roboname.replace(' ', '%20')
         roboname = roboname.replace('\'', '%27')
         return await ctx.send(roboname)
 
+    @commands.command(name='fuckoff',aliases=['foff','fu','fo','fuckyou','fuck'])
+    async def fuckoff(self, ctx, *, msg: str='default'):
+        """
+        Fuck off
+        examples: !fuckoff
+                  !fuckoff <name>
+        """
+
+        options0 = ['asshole', 'awesome', 'bag', 'because', 'bucket', 'bye', 'cool', 'cup', 'diabetes',
+                'everyone', 'everything', 'family', 'fascinating', 'flying', 'fyyff','give', 'horse',
+                'immensity', 'life', 'looking', 'maybe', 'me', 'mornin', 'no', 'pink', 'question',
+                'ratarse', 'retard', 'ridiculous', 'sake', 'shit', 'single', 'thanks', 'that', 'this',
+                'too', 'tucker', 'what', 'zayn', 'zero']
+        options1 = ['back', 'blackadder', 'bus', 'chainsaw', 'cocksplat', 'deraadt', 'donut', 'field',
+                'fts', 'ing', 'keep', 'linus', 'madison', 'nugget', 'off', 'outside', 'problem', 'shakespeare',
+                'shutup', 'think', 'thinking', 'yoda', 'you']
+
+        url = 'https://www.foaas.com/'
+        imgurl = 'https://api.img4me.com/?font=impact&fcolor=FFFFFF&size=12&type=png&text='
+        if msg == 'default':
+            index = randint(0, len(options0)-1)
+            modifier = str(options0[index])
+            url = url + modifier + '/'
+            content = ctx.message.content
+            caller = ctx.message.author.display_name
+            url = url + str(caller)
+            resp = requests.get(url)
+            print(url)
+            txt = re.findall(r'(?<=content=.)([^"]+)', resp.text)[0]
+            imgurl = imgurl + txt
+        else:
+            index = randint(0, len(options1)-1)
+            modifier = str(options1[index])
+            url = url + modifier + '/' + msg + '/' + ctx.message.author.display_name
+            resp = requests.get(url)
+            print(url)
+            txt = re.findall(r'(?<=content=.)([^"]+)', resp.text)[0]
+            imgurl = imgurl + txt
+        imgurl = imgurl.replace(' ', '%20')
+        print(imgurl)
+        imgurl = requests.get(imgurl).text
+        return await ctx.send(imgurl)
 
     @commands.command(name='rtd',aliases=['dice','roll'])
     async def rtd(self, ctx, msg: str):
@@ -274,14 +325,15 @@ class Commands():
             return await ctx.send(returnmsg)
         else:
             items = ctx.message.content.split(' ')
-            if str(items[1]) == 'list':
+            if str(items[1]) == 'list' and str(items[2]) == 'categories':
                 categories = catapi.getCategories()
-                categories.remove('kittens')
-                returnmsg = '\n'.join(categories)
-                returnmsg += '\nhats'
+                returnmsg = 'categories:\n' + '\n'.join(categories)
                 return await ctx.send(pre_text(returnmsg))
             elif str(items[1]) == 'category':
-                img,imgid = catapi.getCat(None,str(items[2]))
+                category = None
+                if str(items[1]) == 'category':
+                    category = str(items[2])
+                img,imgid = catapi.getCat(None,category)
                 returnmsg = img + '\nimage id=' + join(imgid)
                 return await ctx.send(returnmsg)
             elif str(items[1]) == 'favourites':
@@ -289,7 +341,7 @@ class Commands():
                 returnmsg = '\n'.join(favs)
                 return await ctx.send(returnmsg)
             elif str(items[1]) == 'id':
-                if len(items) == 2:
+                if len(items) == 3:
                     img,imgid = catapi.getCat(str(items[2]),None)
                     returnmsg = img + '\nimage id=' + imgid
                     return await ctx.send(returnmsg)
@@ -362,4 +414,4 @@ class Commands():
 
 def setup(bot):
     bot.add_cog(Commands(bot))
-
+    print('Core commands loaded')

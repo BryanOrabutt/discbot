@@ -218,7 +218,7 @@ class Music:
 
     @commands.command(name='connect', aliases=['join'])
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         """Connect to voice.
 
@@ -255,7 +255,7 @@ class Music:
 
     @commands.command(name='play', aliases=['sing'])
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
 
@@ -284,7 +284,7 @@ class Music:
 
     @commands.command(name='pause')
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def pause_(self, ctx):
         """Pause the currently playing song."""
         vc = ctx.voice_client
@@ -299,7 +299,7 @@ class Music:
 
     @commands.command(name='resume')
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def resume_(self, ctx):
         """Resume the currently paused song."""
         vc = ctx.voice_client
@@ -314,7 +314,7 @@ class Music:
 
     @commands.command(name='skip')
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def skip_(self, ctx):
         """Skip the song."""
         vc = ctx.voice_client
@@ -373,7 +373,7 @@ class Music:
 
     @commands.command(name='volume', aliases=['vol'])
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
 
@@ -400,7 +400,7 @@ class Music:
 
     @commands.command(name='stop')
     @commands.guild_only()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(manage_guild=True)
     async def stop_(self, ctx):
         """Stop the currently playing song and destroy the player.
 
@@ -417,4 +417,4 @@ class Music:
 
 def setup(bot):
     bot.add_cog(Music(bot))
-
+    print('Music loaded')

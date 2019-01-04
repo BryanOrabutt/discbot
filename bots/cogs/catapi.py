@@ -5,7 +5,7 @@ from utils import *
 
 key = read_key('cat')
 
-def getCat(imgid=None,category=None):
+def getCat(imgid=None,category=None, breed=None):
     str0 = 'http://thecatapi.com/api/images/get?format=html&api_key=' + str(key)
     str1 = ''
     str2 = ''
@@ -16,14 +16,17 @@ def getCat(imgid=None,category=None):
     url = str(str0 + str1 + str2)
     resp = requests.get(url)
     data = re.findall(urlmarker.URL_REGEX, str(resp.text))
+    #if type(data) is not list or type(data) is not tuple:
+     #   retval = ["Sorry, thecatapi.com does not support this category :(", "N/A"]
+     #   return retval
     img = data[1]
     imgid = re.search(r'(?<=(\?)id=)([\w-]+)', str(data[0]))
     retval = [str(img), str(imgid[0])]
     return retval
    
 def getCategories():
-    resp = requests.get('http://thecatapi.com/api/categories/list')
-    elems = re.findall(r'<name>(.*?)</name>', str(resp.text))
+    resp = requests.get('https://api.thecatapi.com/v1/categories')
+    elems = re.compile(r'(?<="name":.)\w+', 0).findall(str(resp.text))
     return elems
 
 def vote(userid,imgid,score):
