@@ -264,35 +264,28 @@ class Commands():
                 'immensity', 'life', 'looking', 'maybe', 'me', 'mornin', 'no', 'pink', 'question',
                 'ratarse', 'retard', 'ridiculous', 'sake', 'shit', 'single', 'thanks', 'that', 'this',
                 'too', 'tucker', 'what', 'zayn', 'zero']
-        options1 = ['back', 'blackadder', 'bus', 'chainsaw', 'cocksplat', 'deraadt', 'donut', 'field',
+        options1 = ['back', 'blackadder', 'bus', 'chainsaw', 'cocksplat', 'deraadt', 'donut',
                 'fts', 'ing', 'keep', 'linus', 'madison', 'nugget', 'off', 'outside', 'problem', 'shakespeare',
                 'shutup', 'think', 'thinking', 'yoda', 'you']
 
         url = 'https://www.foaas.com/'
-        imgurl = 'https://api.img4me.com/?font=impact&fcolor=FFFFFF&size=12&type=png&text='
         if msg == 'default':
             index = randint(0, len(options0)-1)
             modifier = str(options0[index])
             url = url + modifier + '/'
             content = ctx.message.content
             caller = ctx.message.author.display_name
-            url = url + str(caller)
+            url = url + '%20'
             resp = requests.get(url)
-            print(url)
             txt = re.findall(r'(?<=content=.)([^"]+)', resp.text)[0]
-            imgurl = imgurl + txt
         else:
             index = randint(0, len(options1)-1)
             modifier = str(options1[index])
-            url = url + modifier + '/' + msg + '/' + ctx.message.author.display_name
+            url = url + modifier + '/' + msg + '/' + '%20'
             resp = requests.get(url)
-            print(url)
             txt = re.findall(r'(?<=content=.)([^"]+)', resp.text)[0]
-            imgurl = imgurl + txt
-        imgurl = imgurl.replace(' ', '%20')
-        print(imgurl)
-        imgurl = requests.get(imgurl).text
-        return await ctx.send(imgurl)
+        txt = txt.replace('-', '')
+        return await ctx.send(txt)
 
     @commands.command(name='rtd',aliases=['dice','roll'])
     async def rtd(self, ctx, msg: str):
