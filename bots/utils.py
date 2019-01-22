@@ -2,7 +2,7 @@
 from os import mkdir, listdir
 from os.path import isfile, isdir, join
 
-KEY_FOLDER = "keys"
+KEY_FOLDER = "/home/bastion/discbot/keys"
 BOT_FOLDER = "botdata"
 
 def read_key(file):

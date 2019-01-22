@@ -3,6 +3,7 @@ from discord.ext import commands
 from utils import *
 import sys, traceback
 from discord.voice_client import VoiceClient
+from discord.utils import get
 
 def get_prefix(bot, message):
     """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
@@ -29,6 +30,13 @@ if __name__ == '__main__':
             print(f'Failed to load extension {extension}.', file=sys.stderr)
             traceback.print_exc()
 
+@bot.event
+async def on_message(message):
+    if(message.author.id == 141039412862648321):
+        emoji = u"\U0001F1E8\U0001F1F3"
+        await message.add_reaction(emoji)
+        
+    await bot.process_commands(message)
 
 @bot.event
 async def on_ready():

@@ -1,5 +1,5 @@
 #!/usr/bin/racket
 #lang racket/base
 
-(require "src/supervisor.rkt")
+(require (file "/home/bastion/discbot/src/supervisor.rkt"))
 (run-bots)

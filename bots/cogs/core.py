@@ -142,6 +142,44 @@ class Commands():
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command(name='50/50', aliases=['ff'])
+    async def fifty_fifty(self, ctx, *, msg: str='<none>'):
+        """
+        50/50 chance of Bastion complimenting or insulting someone.
+        
+        Example:
+        !50/50 <name>
+        !50/50
+        """
+        toss = randint(0,1)
+
+        jm = 141039412862648321
+
+        if(ctx.message.author.id == jm or msg.lower() == 'john moan'):
+            toss = randint(0, 999)
+                        
+
+        if(toss == 0):
+            resp = requests.get('https://www.complimentr.com/api')
+            ans = re.findall(r'(?<="compliment":.)([^"]+)', resp.text)[0]
+            if(msg != '<none>'):
+                fix = '' + msg + ' is'
+                ans = ans.replace("you are", fix)
+                fix = '' + msg + ' has'
+                ans = ans.replace("you have", fix)
+                return await ctx.send(ans.capitalize())
+            else:
+                return await ctx.send(ans.capitalize())
+        else:
+            if(msg != '<none>'):
+                url = 'https://insult.mattbas.org/api/insult.txt?who=' + msg
+                resp = requests.get(url)
+                return await ctx.send(resp.text)
+            else:
+                resp = requests.get('https://insult.mattbas.org/api/insult.txt')
+                return await ctx.send(resp.text)
+
+
     @commands.command(name='dog',aliases=['puppers','doggos'])
     async def dog(self, ctx):
         """
@@ -161,6 +199,7 @@ class Commands():
         """
 
         doge = 'http://dogr.io'
+        msg = msg.lower()
         tokens = msg.replace(' ', '').split(',')
         for word in tokens:
             doge = doge + '/' + word
