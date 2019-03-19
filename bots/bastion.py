@@ -4,6 +4,8 @@ from utils import *
 import sys, traceback
 from discord.voice_client import VoiceClient
 from discord.utils import get
+import requests
+import json
 
 def get_prefix(bot, message):
     """A callable Prefix for our bot. This could be edited to allow per server prefixes."""
@@ -34,8 +36,26 @@ if __name__ == '__main__':
 async def on_message(message):
     if(message.author.id == 141039412862648321):
         emoji = u"\U0001F1E8\U0001F1F3"
+        emoji2 = u"\U0001F1E7\U0001F1F7"
+        txt = message.content
+        if(txt[0] != '!'):
+            tkey = read_key('translate')
+            url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key='
+            url = url + tkey
+            url = url + '&text='+txt
+            url = url + '&lang=en-zh'
+            url = url + '&format=plain'
+            resp = requests.get(url)
+            resp_json = json.loads(resp.text)
+            translation = str(resp_json['text'])
+            translation = translation[2:]
+            translation = translation[:-2]
+            translation = "In John Moan's mother tongue: " + translation
+            channel = message.channel
+            await channel.send(translation)
         await message.add_reaction(emoji)
-        
+        await message.add_reaction(emoji2)
+                
     await bot.process_commands(message)
 
 @bot.event
