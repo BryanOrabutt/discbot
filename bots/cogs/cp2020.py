@@ -96,50 +96,22 @@ class CombatResult:
 
         return fumbles.count()
 
-    def GetDamageByLocation(self):
-        headHits = list(
-            filter(lambda atk: atk.Location == "Head", self.Attacks))
-        torsoHits = list(
-            filter(lambda atk: atk.Location == "Torso", self.Attacks))
-        leftArmHits = list(
-            filter(lambda atk: atk.Location == "Left Arm", self.Attacks))
-        rightArmHits = list(
-            filter(lambda atk: atk.Location == "Right Arm", self.Attacks))
-        leftLegHits = list(
-            filter(lambda atk: atk.Location == "Left Leg", self.Attacks))
-        rightLegHits = list(
-            filter(lambda atk: atk.Location == "Right Leg", self.Attacks))
+     def GetDamageByLocation(self, location):
+        locDmg = []
 
-        headDmg = 0
-        torsoDmg = 0
-        laDmg = 0
-        raDmg = 0
-        llDmg = 0
-        rlDmg = 0
+        for atk in self.Attacks:
+            if atk.HitTarget and atk.Location == location:
+                locDmg.append(atk.Damage)
 
-        for atk in headHits:
-            if atk.HitTarget:
-                headDmg += atk.Damage
+        return locDmg
 
-        for atk in torsoHits:
-            if atk.HitTarget:
-                torsoDmg += atk.Damage
-
-        for atk in leftArmHits:
-            if atk.HitTarget:
-                laDmg += atk.Damage
-
-        for atk in rightArmHits:
-            if atk.HitTarget:
-                raDmg += atk.Damage
-
-        for atk in leftLegHits:
-            if atk.HitTarget:
-                llDmg += atk.Damage
-
-        for atk in rightLegHits:
-            if atk.HitTarget:
-                rlDmg += atk.Damage
+    def GetDamageDetails(self):
+        headDmg = self.GetDamageByLocation("Head")
+        torsoDmg = self.GetDamageByLocation("Torso")
+        laDmg = self.GetDamageByLocation("Left Arm")
+        raDmg = self.GetDamageByLocation("Right Arm")
+        llDmg = self.GetDamageByLocation("Left Leg")
+        rlDmg = self.GetDamageByLocation("Right Leg")
 
         locationDamage = dict({'Head': headDmg, 'Torso': torsoDmg, 'Left Arm': laDmg,
                                'Right Arm': raDmg, 'Left Leg': llDmg, 'Right Leg': rlDmg})
@@ -147,7 +119,7 @@ class CombatResult:
         return locationDamage
 
     def Summary(self):
-        attackInfo = self.GetDamageByLocation()
+        attackInfo = self.GetDamageDetails()
         objStr = "Attacks Made: " + str(len(self.Attacks))
         objStr += "\nHead: " + str(attackInfo['Head'])
         objStr += "\nTorso: " + str(attackInfo['Torso'])
@@ -155,6 +127,7 @@ class CombatResult:
         objStr += "\nRight Arm: " + str(attackInfo['Right Arm'])
         objStr += "\nLeft Leg: " + str(attackInfo['Left Leg'])
         objStr += "\nRight Leg: " + str(attackInfo['Right Leg'])
+        objStr += "\n\nFumbles Made: " + str(self.GetTotalFumblesMade())
         objStr += "\n\nTotal Hits: " + str(self.TotalHits())
         objStr += "\nTotal Misses: " + str(self.TotalMisses())
         objStr += "\nTotal Damage: " + str(self.GetTotalDamage())
