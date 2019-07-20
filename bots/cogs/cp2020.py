@@ -94,7 +94,7 @@ class CombatResult:
             if atk.Fumble != "":
                 fumbles.append(atk.Fumble)
 
-        return fumbles.count()
+        return len(fumbles)
 
      def GetDamageByLocation(self, location):
         locDmg = []
