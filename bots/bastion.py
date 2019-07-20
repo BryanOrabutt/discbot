@@ -21,7 +21,7 @@ def get_prefix(bot, message):
 
 # Below cogs represents our folder our cogs are in. Following is the file name. So 'meme.py' in cogs, would be cogs.meme
 # Think of it like a dot path import
-initial_extensions = ['cogs.core', 'cogs.music']#music2 is another implmenation. use music if it does not work
+initial_extensions = ['cogs.core', 'cogs.music', 'cogs.cp2020']#music2 is another implmenation. use music if it does not work
 
 bot = commands.Bot(command_prefix=get_prefix, description='Beep boop, I am a robot!')
 
