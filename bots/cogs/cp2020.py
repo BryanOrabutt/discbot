@@ -96,7 +96,7 @@ class CombatResult:
 
         return len(fumbles)
 
-     def GetDamageByLocation(self, location):
+    def GetDamageByLocation(self, location):
         locDmg = []
 
         for atk in self.Attacks:
@@ -135,7 +135,7 @@ class CombatResult:
         return objStr
 
 
-class Combat:
+class Combat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -188,7 +188,7 @@ class Combat:
                 anAttack.Fumble = info.COMBAT_FUMBLES[fumbleResult]
 
                 if fumbleResult >= 8:
-                    fumbleDamage = combat.RollDamage(numOfDice, sides, 0)
+                    fumbleDamage = self.RollDamage(numOfDice, sides, 0)
                     anAttack.FumbleDamage = fumbleDamage
 
             attacks.append(anAttack)
@@ -229,7 +229,7 @@ class Combat:
                     anAttack.Fumble = info.COMBAT_FUMBLES[fumbleResult]
 
                     if fumbleResult >= 8:
-                        fumbleDamage = combat.RollDamage(numOfDice, sides, 0)
+                        fumbleDamage = self.RollDamage(numOfDice, sides, 0)
                         anAttack.FumbleDamage = fumbleDamage
 
                 attacks.append(anAttack)
@@ -284,7 +284,7 @@ class Combat:
                     anAttack.Fumble = info.COMBAT_FUMBLES[fumbleResult]
 
                     if fumbleResult >= 8:
-                        fumbleDamage = combat.RollDamage(numOfDice, sides, 0)
+                        fumbleDamage = self.RollDamage(numOfDice, sides, 0)
                         anAttack.FumbleDamage = fumbleDamage
 
                 attacks.append(anAttack)
