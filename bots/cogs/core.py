@@ -148,7 +148,7 @@ class Commands(commands.Cog):
             'Don\'t count on it',
             'My reply is no',
             'My sources say no',
-            'Outlook no so good',
+            'Outlook not so good',
             'Very doubtful'
             ]
         index = randint(0, 19)
